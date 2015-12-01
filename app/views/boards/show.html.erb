@@ -1,0 +1,28 @@
+<div id="wrapper">
+  <h1><%= @board.name %></h1>
+
+  <div id="add_list">
+  <%= form_for [@board, @list], remote: true, data: {type: "script"} do |f| %>
+    <%= f.label :title, :value => "Make a new list:" %>
+    <%= f.text_field :title, :placeholder => "Title" %>
+    <%= f.submit "(+) add" %>
+  <% end %>
+  </div><!-- #add_list -->
+  
+  <div id="add_tasks">
+    <%= form_for [@board, @task], remote: true do |f| %>
+      <%= f.label :list_id, :value => "Select a list:" %>
+      <%= f.collection_select(:list_id, @board.lists, :id, :title, {:prompt => true}) %>
+      <%= f.label :description, :value => "Task Description:" %>
+      <%= f.text_field :description, placeholder: "description" %>
+      <%= f.label :priority, :value => "Task Priority:" %>
+      <%= f.text_field :priority, placeholder: "priority" %>
+      <%= f.submit "(+) add"%>
+    <% end %>
+  </div> <!-- #add_tasks -->
+ 
+  <section id="lists"> 
+    <%= render @lists %>   
+  </section>
+
+</div><!-- #wrapper -->
